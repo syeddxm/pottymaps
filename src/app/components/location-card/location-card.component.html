@@ -1,0 +1,29 @@
+<ion-card *ngIf="!geolocation" (click)="openBathroom(location)">
+  <ion-card-content>
+    <ion-list lines="none">
+      <ion-item>
+        <ion-label>{{location.data().address}}</ion-label>
+        <ion-icon slot="end" name="bookmark" [color]="favourited ? 'danger' : 'medium'" (click)="toggleFavourite($event)"></ion-icon>      </ion-item>
+      <ion-item>
+        <app-stars [rating]="location.data().average"></app-stars>
+        <app-timing-chip [timing]="location.data().timing[day]" slot="end"></app-timing-chip>
+      </ion-item>
+    </ion-list>
+
+  </ion-card-content>
+</ion-card>
+
+<ion-card *ngIf="geolocation" (click)="openBathroom(location)">
+  <ion-card-content>
+    <ion-list lines="none">
+      <ion-item>
+        <ion-label>{{location.data.data().d.address}}</ion-label>
+        <ion-icon slot="end" name="bookmark" [color]="favourited ? 'danger' : 'medium'" (click)="toggleFavourite($event)"></ion-icon>
+      </ion-item>
+      <ion-item>
+        <app-stars [rating]="location.data.data().d.average"></app-stars>
+        <app-timing-chip [timing]="location.data.data().d.timing[day]" slot="end"></app-timing-chip>
+      </ion-item>
+    </ion-list>
+  </ion-card-content>
+</ion-card>

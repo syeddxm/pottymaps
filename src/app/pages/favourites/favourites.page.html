@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>favourites</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <app-list *ngIf="!noFavourites" [locations]="favouritesObjects" [geolocation]="true"></app-list>
+    <ion-text padding *ngIf="noFavourites"><p>You haven't favourited any locations :(</ion-text>
+</ion-content>

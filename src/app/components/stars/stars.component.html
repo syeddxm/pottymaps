@@ -1,0 +1,4 @@
+<ion-icon 
+    *ngFor="let star of ratingArray" 
+    [color]="rating < 3 ? 'danger': 'warning'" 
+    name="{{star == 2? 'star': ((star == 1) ? 'star-half' : 'star-outline')}}"></ion-icon>

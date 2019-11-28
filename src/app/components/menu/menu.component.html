@@ -1,0 +1,45 @@
+<ion-menu contentId="content1" side="start">
+  <ion-header>
+    <ion-toolbar>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content padding >
+    <div class="loggedInMenu">
+      <div>
+        <ion-row justify-content-center align-items-center >
+            <ion-avatar>
+              <img *ngIf="user && user.photoURL" src={{user.photoURL}}>
+              <img *ngIf="!user || !user.photoURL" src='assets/poopEmoji.png'>
+            </ion-avatar>
+        </ion-row>
+        <ion-row justify-content-center>
+          <div class="ion-text-center">
+            <h3 *ngIf=user>{{user.displayName}}</h3>
+          </div>
+        </ion-row>         
+        <ion-row justify-content-center>
+          <ion-button color="light" expand="block" shape="round" [disabled]="!user" (click)="goToFavourites()">
+            My Favourite Locations
+          </ion-button>
+        </ion-row>
+        <ion-row  justify-content-center>
+          <ion-button color="light" expand="block" shape="round"  [disabled]="!user">
+            My Submitted locations
+          </ion-button>
+        </ion-row>
+        <ion-row justify-content-center>
+          <ion-button color="dark" expand="block" shape="round" [disabled]="!user">
+            Submit a Location
+          </ion-button>
+        </ion-row>
+      </div>
+
+      <ion-button color="light" expand="block" shape="round" (click)="signOut()" [hidden]=!user>
+        Log Out
+      </ion-button>
+      <ion-button color="light" expand="block" shape="round" (click)="login()" [hidden]=user>
+        Log In / Sign Up
+      </ion-button>
+    </div>
+  </ion-content>
+</ion-menu>

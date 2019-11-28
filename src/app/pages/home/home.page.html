@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{listView? 'List View' : 'Map View'}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div [hidden]=!listView>
+    <app-list [locations]="locations" [geolocation]="false"></app-list>
+  </div>
+
+  <div [hidden]=listView>
+
+    <app-map 
+      [gpsPositionLat]="gpsPosition.lat" 
+      [gpsPositionLng]="gpsPosition.lng" 
+      [pinPositionLat] = "pinPosition.lat"
+      [pinPositionLng] = "pinPosition.lng"
+      [trackingUser]="trackingUser"
+      [locations]="locations"
+      [index]="index"
+      (indexChangedEvent)="newIndex($event)"
+    ></app-map>
+
+    <app-search-bar padding></app-search-bar>
+
+    <app-bottom-drawer
+      [locations]="locations"
+      [index]="index"
+      (indexChangedEvent)="newIndex($event)">
+    </app-bottom-drawer>
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button size="small" color="dark" (click)="toggleView()">
+      <ion-icon [name]="listView ? 'map' : 'list'"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

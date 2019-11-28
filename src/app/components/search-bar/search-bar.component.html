@@ -1,0 +1,8 @@
+<ion-item>
+  <ion-searchbar no-padding [(ngModel)]="searchText" (ionInput)="enterPressed()"></ion-searchbar>
+</ion-item>
+<ion-list margin *ngIf="searchBarShow == true && searchText.length > 0">
+  <ion-item *ngFor="let suggestion of searchSuggestions" (click)="suggestionPressed(suggestion)">
+    {{suggestion.description}}
+  </ion-item>
+</ion-list>

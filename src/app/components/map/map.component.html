@@ -1,0 +1,35 @@
+<agm-map
+  [style.height.px]="height"
+  [usePanning]="true"
+  [latitude]="mapCenter.latitude"
+  [longitude]="mapCenter.longitude"
+  [zoom]=12
+  (centerChange)="mapDragging($event)"
+  (idle)="mapDragEnd()">
+
+
+  <div *ngFor="let bathroom of locations; let i = index">
+      <agm-marker 
+        [latitude]=bathroom.data().coordinates.latitude 
+        [longitude]="bathroom.data().coordinates.longitude"
+        iconUrl='assets/poo_icon.png'
+        (markerClick)="locationClicked(i)"></agm-marker>
+  </div>
+  <agm-marker 
+    *ngIf="geo.getTrackingUser;" 
+    [latitude]="gpsPositionLat" 
+    [longitude]="gpsPositionLng" 
+    iconUrl='assets/gps.png'></agm-marker>
+  <agm-marker
+    *ngIf="!geo.getTrackingUser;" 
+    [latitude]="pinPositionLat" 
+    [longitude]="pinPositionLng" 
+    iconUrl='assets/pin.png'></agm-marker>
+
+</agm-map>
+
+<ion-fab vertical="bottom" horizontal="start" slot="fixed">
+  <ion-fab-button size="small" color="dark" (click)="returnToUser()">
+    <ion-icon name="locate"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
