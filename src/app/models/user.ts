@@ -1,7 +1,7 @@
 export class User {
     uid: any;
     email: any;
-    displayName: any;
+    displayName: string;
     photoURL: any;
     emailVerified: any;
     favourites: string[];
