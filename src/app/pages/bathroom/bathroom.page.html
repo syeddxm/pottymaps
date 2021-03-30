@@ -99,12 +99,12 @@
       <ion-list *ngFor="let review of reviews">
         <app-reviews [review]="review"></app-reviews>
       </ion-list>
-      <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+      <!-- <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
         <ion-infinite-scroll-content
           loadingSpinner="bubbles"
           loadingText="Loading more data...">
         </ion-infinite-scroll-content>
-      </ion-infinite-scroll>
+      </ion-infinite-scroll> -->
     </ion-card-content>
   </ion-card>  
 </ion-content>

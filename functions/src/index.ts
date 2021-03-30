@@ -1,58 +1,45 @@
-import * as functions from 'firebase-functions';
-import * as admin from 'firebase-admin';
-
-// tslint:disable-next-line:no-implicit-dependencies
-
-
-admin.initializeApp(functions.config().firestore);
-
+import * as functions from "firebase-functions";
 
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript
 //
 // export const helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
+//   functions.logger.info("Hello logs!", {structuredData: true});
+//   response.send("Hello from Firebase!");
 // });
 
-exports.countreviews = functions.firestore.document('/locations/{locationid}/reviews/{reviewsid}').onWrite((change, context) => {
-        const locationRef = change.after.ref.parent.parent;
+exports.countreviews = functions.firestore
+    .document("locations/{locationsId}/reviews/{reviewsId}")
+    .onWrite((change, context) => {
+      const locationRef = change.after.ref.parent.parent;
 
-        let currentRating: number;
-        let currentReviewCount: number;
-        let newRating: number;
-        let newAverage: number;
+      let cR: number;
+      let cRC: number;
+      let newRating: number;
+      let newAverage: number;
 
+      locationRef?.get().then((data) => {
+        const location = data.data()?.d;
+        cR = location.rating;
+        cRC = location.reviewCount;
 
-        locationRef?.get().then((data) => {
+        const review = change.after.data();
+        newRating = review?.rating;
 
-            const location = data.data()?.d;
-            currentRating = location.rating;
-            currentReviewCount = location.reviewCount;
+        if (cRC === 0) {
+          newAverage = newRating;
+        } else {
+          const currentR = cR * (cRC) / (cRC + 1);
+          const newR = newRating * 1 / (cRC + 1);
+          newAverage = + currentR + newR;
+        }
 
-            const review = change.after.data();
-            newRating = review?.rating;
+        locationRef.set(
+            {d: {rating: newAverage, reviewCount: cRC + 1}},
+            {merge: true},
+        ).catch();
+      }).catch();
 
-            if (currentReviewCount === 0) {
-                newAverage = newRating;
-            } else {
-
-                const currentR = currentRating * (currentReviewCount) / (currentReviewCount + 1);
-                const newR = newRating * 1 / (currentReviewCount + 1);
-
-                newAverage = + currentR + newR;
-
-            }
-
-            locationRef.set({
-                d: {
-                    rating: newAverage,
-                    reviewCount: currentReviewCount + 1
-                }
-            },  {merge: true}).catch();
-
-        }).catch();
-
-        return null;
-
-
-});
+      return null;
+    }
+    );
