@@ -1,0 +1,15 @@
+ion-input, ion-textarea {
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+ion-item {
+    --inner-padding-start: 0;
+    --inner-padding-end: 0;
+    --padding-start: 0;
+}
+
+app-star-review {
+    display: flex;
+    justify-content: center;
+}

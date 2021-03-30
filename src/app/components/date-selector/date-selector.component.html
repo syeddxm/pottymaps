@@ -1,0 +1,9 @@
+<ion-item>
+  <ion-label>{{day.day | titlecase}}</ion-label>
+  <ion-button (click)="closed()">
+    <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+    Closed
+  </ion-button>
+  <ion-datetime displayFormat="h:mm A" minuteValues="0,15,30,45" placeholder="Open" [(ngModel)]="open" (ionChange)="openingTime()" name="sundayOpen"></ion-datetime>
+  <ion-datetime displayFormat="h:mm A" minuteValues="{{minutes}}" hourValues="{{hours}}" [(ngModel)]="close"  (ionChange)="closingTime()" placeholder="Close" ></ion-datetime>
+</ion-item>

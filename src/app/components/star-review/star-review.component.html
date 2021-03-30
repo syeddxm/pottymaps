@@ -1,0 +1,7 @@
+<ion-icon 
+  *ngFor="let star of ratingArray; index as i" 
+  [color]="'warning'" 
+  name="{{star == 2? 'star': ((star == 1) ? 'star-half' : 'star-outline')}}"
+  (click)="starClicked(i)"
+  size="large">
+</ion-icon>

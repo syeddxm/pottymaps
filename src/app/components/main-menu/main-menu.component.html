@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title></ion-title>
+  </ion-toolbar>
+</ion-header>
+  <ion-content>
+    <ion-list id="inbox-list">
+      <ion-item lines="none" detail="false">
+        <ion-avatar slot="start">
+          <img src="{{loggedIn? user.photoURL : 'assets/poopEmoji.png'}}">
+        </ion-avatar>
+        <ion-label>{{ loggedIn ? user.displayName: 'Potty Maps' }}</ion-label>
+      </ion-item>
+
+      <ion-menu-toggle auto-hide="false" >
+        <ion-item (click)="selectedIndex = 0" routerDirection="root" [routerLink]="[appPages[0].url]" lines="none" detail="false" [class.selected]="selectedIndex == 0">
+          <ion-icon slot="start" [ios]="appPages[0].icon + '-outline'" [md]="appPages[0].icon + '-sharp'"></ion-icon>
+          <ion-label>{{ appPages[0].title }}</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+
+      <ion-menu-toggle auto-hide="false" *ngIf="!loggedIn">
+        <ion-item (click)="selectedIndex = 1" routerDirection="root" [routerLink]="[appPages[1].url]" lines="none" detail="false" [class.selected]="selectedIndex == 1">
+          <ion-icon slot="start" [ios]="appPages[1].icon + '-outline'" [md]="appPages[1].icon + '-sharp'"></ion-icon>
+          <ion-label>{{ appPages[1].title }}</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+
+      <ion-menu-toggle auto-hide="false" *ngIf="loggedIn">
+        <ion-item (click)="submit()" lines="none" detail="false" [class.selected]="selectedIndex == 3">
+          <ion-icon slot="start" name="add-circle"></ion-icon>
+          <ion-label> Submit a Location</ion-label>
+        </ion-item>       
+      </ion-menu-toggle>
+   
+      <ion-menu-toggle auto-hide="false" *ngIf="loggedIn">
+        <ion-item (click)="signOut()" lines="none" detail="false">
+          <ion-icon slot="start" [ios]="'log-out' + '-outline'" [md]="'log-out' + '-sharp'"></ion-icon>
+          <ion-label> Log Out</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+    </ion-list>
+
+    <ion-list id="sort-list">
+      <ion-list-header>Sort By</ion-list-header>
+
+      <div *ngFor="let label of labels; let i = index">
+        <ion-item *ngIf="loggedIn || i > 0"  lines="none" (click)="labelClick(label.click)"  [class.menu-item-active]="label.icon" >
+          <ion-label>{{ label.name }}</ion-label>
+        </ion-item>
+      </div>
+    </ion-list>
+  </ion-content>

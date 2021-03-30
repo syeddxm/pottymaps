@@ -1,0 +1,39 @@
+<form (ngSubmit)="logForm()">
+  <ion-list>
+    <ion-item lines="none" detail="false">
+      <ion-label color="primary">Location Title</ion-label>
+      <ion-input type="text" [(ngModel)]="newLocation.title" name="title"></ion-input>
+    </ion-item>
+    <ion-item lines="none" detail="false">
+      <ion-label color="primary">Description</ion-label>
+      <ion-textarea [(ngModel)]="newLocation.about" name="description"></ion-textarea>
+    </ion-item>
+  </ion-list>
+  <ion-list>
+    <ion-item lines="none" detail="false">
+      <ion-label color="primary">Wheel Chair Access</ion-label>
+      <ion-toggle [(ngModel)]="newLocation.wheelchairAccess" name="wheelchair access"></ion-toggle>
+    </ion-item>
+  
+    <ion-item lines="none" detail="false">
+      <ion-label color="primary">Gender Neutral</ion-label>
+      <ion-toggle [(ngModel)]="newLocation.genderNeutral" name="gender neutral"></ion-toggle>
+    </ion-item>
+  
+    <ion-item lines="none" detail="false">
+      <ion-label color="primary">Changing Table</ion-label>
+      <ion-toggle [(ngModel)]="newLocation.changingTable" name="changing table"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label color="primary">Timing</ion-label>
+    </ion-item>
+
+    <app-date-selector *ngFor="let day of newLocation.timing; let i = index;" [day]="day" (OpenClose)="getTimings($event, i)"></app-date-selector>
+
+    <app-review-input (reviewUpdated)="reviewUpdated($event)"></app-review-input>
+               
+  </ion-list>
+
+  <ion-button fill="outline" type="submit">Submit Location</ion-button>
+</form>

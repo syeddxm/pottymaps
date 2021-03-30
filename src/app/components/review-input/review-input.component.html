@@ -1,0 +1,15 @@
+<app-star-review (starClickedOutput)="starClickedOutput($event)"></app-star-review>
+
+<form (ngSubmit)="reviewSubmitted()" *ngIf="review.rating > 0">
+    <ion-item lines="none" detail="false">
+      <ion-label for="title" color="primary" position="stacked">Review Title</ion-label>
+      <ion-input [(ngModel)]="review.title" name="title"></ion-input>
+    </ion-item>
+    <ion-item lines="none" detail="false">
+      <ion-label for="description" color="primary" position="stacked">Leave a Review</ion-label>
+      <ion-textarea [(ngModel)]="review.description" name="description"></ion-textarea>
+    </ion-item>
+    <br>
+    <ion-button [disabled]="review.title && review.description ? false : true" type="submit">Submit a Review</ion-button> 
+
+</form>

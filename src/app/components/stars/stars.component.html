@@ -1,0 +1,10 @@
+<div class="stars-container">
+    <div class="review-stars">
+        <ion-icon 
+            *ngFor="let star of ratingArray" 
+            [color]="'warning'" 
+            name="{{star == 2? 'star': ((star == 1) ? 'star-half' : 'star-outline')}}">
+        </ion-icon>
+    </div>
+    <ion-text [color]="'warning'">{{rating.toPrecision(2)}}</ion-text>
+</div>

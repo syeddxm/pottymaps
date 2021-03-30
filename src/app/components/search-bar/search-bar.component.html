@@ -1,0 +1,8 @@
+<ion-item lines="none" detail="false">
+  <ion-searchbar  [(ngModel)]="searchText" (keyup)="enterPressed()"></ion-searchbar>
+</ion-item>
+<ion-list class="search-results" margin *ngIf="searchBarShow == true && searchText.length > 0">
+  <ion-item *ngFor="let suggestion of searchSuggestions" (click)="suggestionPressed(suggestion)">
+    {{suggestion.description}}
+  </ion-item>
+</ion-list>
