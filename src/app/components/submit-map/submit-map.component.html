@@ -1,0 +1,14 @@
+<agm-map
+  [style.height.px]="200"
+  [usePanning]="true"
+  [latitude]="lat"
+  [longitude]="lng"
+  [zoom]=15
+  (mapClick)="mapClick($event)">
+
+  <agm-marker
+    [latitude]="lat" 
+    [longitude]="lng" 
+    iconUrl='assets/pin.png'></agm-marker>
+
+</agm-map>

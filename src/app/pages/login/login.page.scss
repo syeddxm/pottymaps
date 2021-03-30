@@ -1,0 +1,53 @@
+
+  ion-header ion-toolbar {
+    --background: translucent;
+  }
+
+
+ion-content div.logoAndLoginButtons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.logo {
+    text-align: center;
+}
+
+.logo img {
+    margin: 10%;
+    width: 50px;
+}
+
+.loginButtons {
+    display: flex;
+    flex-direction: column;
+}
+
+.loginButtons ion-button {
+    margin: 2% 10%;
+}
+
+ion-item {
+    border-radius: 30px !important;
+    margin: 5% 0;
+}
+
+ion-button.googleButton {
+    --background : #db3236;
+    --background-activated: #a71012; 
+}
+
+.signInUpButtons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.validation-errors {
+    color: red;
+}
+
+.forgotPassword p {
+    text-align: center;
+}

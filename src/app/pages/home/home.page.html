@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar lines="none" detail="false">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title > Home </ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+
+  <div id="container">
+
+    <div [hidden]=!listView>
+
+      <app-main-list [locations]="locations" [geolocation]="false"></app-main-list>
+    </div>
+  
+    <div [hidden]=listView id="map-view">
+      <app-search-bar></app-search-bar>
+      <app-main-map
+        [gpsPositionLat]="gpsPosition.lat" 
+        [gpsPositionLng]="gpsPosition.lng" 
+        [pinPositionLat]="pinPosition.lat"
+        [pinPositionLng]="pinPosition.lng"
+        [trackingUser]="trackingUser"
+        [locations]="locations"
+        [index]="index"
+        (indexChangedEvent)="newIndex($event)"
+        [submitMode]="submitMode">
+      </app-main-map>
+      
+      <app-bottom-drawer
+        *ngIf="submitMode == false"
+        [locations]="locations"
+        [index]="index"
+        (indexChangedEvent)="newIndex($event)">
+      </app-bottom-drawer>
+
+    </div>
+
+    
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-fab 
+    vertical="bottom" 
+    horizontal="end" 
+    slot="fixed"
+    *ngIf="submitMode == false">
+      <ion-fab-button size="small" color="light" (click)="toggleView()">
+        <ion-icon [name]="listView ? 'map' : 'list'"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+</ion-footer>

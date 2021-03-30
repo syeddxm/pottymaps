@@ -1,0 +1,110 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title> </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngIf=data>
+    <app-submit-map [lat]="data.coordinates.latitude" [lng]="data.coordinates.longitude"></app-submit-map>
+    <ion-card-header>
+      <ion-card-title>{{data.title}}</ion-card-title>
+      <ion-card-subtitle>{{data.address}}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <p>{{data.about}}</p>
+      <hr>
+      <ion-list lines="none">
+        <ion-item>
+          <app-stars slot="start" [rating]='data.rating'></app-stars>
+          <app-timing-chip slot="end"  [timing]="data.timing[day]"></app-timing-chip>
+        </ion-item>
+        <ion-card-subtitle>Features</ion-card-subtitle>
+
+        <ion-item>
+          <ion-chip>
+            <ion-label>Changing Table</ion-label>
+            <ion-icon name="{{data.changingTable ? 'checkbox-outline': 'square-outline'}}" color="primary"></ion-icon>
+          </ion-chip>
+        </ion-item>
+
+        <ion-item>
+          <ion-chip>
+            <ion-label>Gender Neutral</ion-label>
+            <ion-icon name="{{data.genderNeutral ? 'checkbox-outline': 'square-outline'}}" color="primary"></ion-icon>
+          </ion-chip>
+        </ion-item>
+
+        <ion-item>
+          <ion-chip>
+            <ion-label>Wheelchair Access</ion-label>
+            <ion-icon name="{{data.wheelchairAccess ? 'checkbox-outline': 'square-outline'}}" color="primary"></ion-icon>
+          </ion-chip>       
+        </ion-item>
+      </ion-list>          
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf=data>
+    <ion-card-header>
+      <ion-card-subtitle>Timing</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+
+          <ion-label>
+            Day
+          </ion-label>
+          <ion-label>
+            Open
+          </ion-label>
+          <ion-label>
+            Close
+          </ion-label>
+        </ion-item>
+
+        <ion-item *ngFor="let timing of data.timing; index as i"  lines="none" [color]="i == day? 'primary' : ''">
+          <ion-label>
+            {{timing.day | titlecase }}
+          </ion-label>
+          <ion-label *ngIf="timing.open && timing.close">
+            {{timing.open | dateToTime }}
+          </ion-label>
+          <ion-label *ngIf="timing.open && timing.close">
+            {{timing.close | dateToTime }}
+          </ion-label> 
+          <ion-label *ngIf="!timing.open || !timing.close">
+            Closed
+          </ion-label>
+         
+        </ion-item>
+      </ion-list> 
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf=data>
+    <ion-card-header>
+      <ion-card-subtitle>Write a Review</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+        <app-review-input [id]="id"></app-review-input>     
+    </ion-card-content>
+    <ion-card-header>
+      <ion-card-subtitle>Reviews</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list *ngFor="let review of reviews">
+        <app-reviews [review]="review"></app-reviews>
+      </ion-list>
+      <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+        <ion-infinite-scroll-content
+          loadingSpinner="bubbles"
+          loadingText="Loading more data...">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </ion-card-content>
+  </ion-card>  
+</ion-content>

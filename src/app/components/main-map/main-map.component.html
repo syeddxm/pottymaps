@@ -1,0 +1,75 @@
+<agm-map
+  [style.height.px]="height - 102"
+  [usePanning]="true"
+  [latitude]="mapCenter.latitude"
+  [longitude]="mapCenter.longitude"
+  [zoom]=15
+  [streetViewControl]="false"
+  [zoomControl]="false"
+  (centerChange)="mapDragging($event)"
+  (mapClick)="mapClick($event)"
+  (idle)="mapDragEnd()"
+  [styles]="darkStyle">
+
+
+  <div *ngIf="submitMode == false">
+    <agm-marker-cluster
+      [styles]="cluster.styles"
+      [averageCenter]="true">
+      <agm-marker 
+        *ngFor="let bathroom of locations; let i = index"
+        [latitude]="bathroom.data().coordinates.latitude"
+        [longitude]="bathroom.data().coordinates.longitude"
+        [iconUrl]="i == index ? bigIcon: icon"
+        (markerClick)="locationClicked(i)">
+      </agm-marker>
+    </agm-marker-cluster>
+  </div>
+  <agm-marker 
+    *ngIf="googleMapService.getTrackingUser;" 
+    [latitude]="gpsPositionLat" 
+    [longitude]="gpsPositionLng" 
+    iconUrl='assets/gps.png'></agm-marker>
+  <agm-marker
+    *ngIf="!googleMapService.getTrackingUser;" 
+    [latitude]="pinPositionLat" 
+    [longitude]="pinPositionLng" 
+    iconUrl='assets/pin.png'></agm-marker>
+
+  <agm-marker
+    *ngIf="submitMode == true;" 
+    [latitude]="pinPositionLat" 
+    [longitude]="pinPositionLng" 
+    iconUrl='assets/pin.png'></agm-marker>
+
+</agm-map>
+
+<ion-fab 
+  vertical="bottom" 
+  horizontal="start" 
+  slot="fixed"
+  *ngIf="submitMode == false">
+  <ion-fab-button size="small" color="light" (click)="returnToUser()">
+    <ion-icon name="locate"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
+<ion-fab 
+  vertical="bottom" 
+  horizontal="start" 
+  slot="fixed"
+  *ngIf="submitMode == true">
+  <ion-fab-button size="small" color="light" (click)="cancelSubmitMode()">
+    <ion-icon name="close"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
+<ion-fab 
+  vertical="bottom" 
+  horizontal="end" 
+  slot="fixed"
+  *ngIf="submitMode == true">
+  <ion-fab-button size="small" color="dark" (click)="submitLocation()">
+    <ion-icon name="caret-forward"></ion-icon>
+  </ion-fab-button>
+</ion-fab>

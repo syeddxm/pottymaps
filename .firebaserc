@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "pottymaps": {
+      "hosting": {
+        "app": [
+          "pottymaps"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "pottymaps"
+  }
+}

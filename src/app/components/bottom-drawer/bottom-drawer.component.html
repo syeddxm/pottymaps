@@ -1,0 +1,5 @@
+<ion-slides #mainSlides pager="true" [options]="plt.width() > 450 ? slideOpts: slideOptsMobile" (ionSlideDidChange)="slideChanged()"	>
+  <ion-slide *ngFor="let location of locations">
+    <app-location-card  [location]="location"></app-location-card>
+  </ion-slide>
+</ion-slides>  

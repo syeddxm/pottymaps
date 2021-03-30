@@ -1,0 +1,192 @@
+<ion-header [translucent]="true" collapse="condense">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title> Login </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding scrollY="false">
+  
+
+  <div class="logoAndLoginButtons">
+    <div class="logo">
+      <img src="assets/poopEmoji.png">
+    </div>
+
+    <div *ngIf="!emailSignIn && !emailSignUp && !forgotPassword" class="loginButtons">
+      <ion-button (click)="emailSignIn = !emailSignIn" color="light" shape="round">
+        Sign In with Email
+      </ion-button>
+
+      <ion-button (click)="emailSignUp = !emailSignUp" color="light" shape="round">
+        Sign Up with Email
+      </ion-button>
+
+      <ion-button (click)="loginWithGoogle()" class="googleButton" shape="round">
+        Login / Signup with Google
+      </ion-button>
+
+      <ion-button (click)="continueAsGuest()" class="googleButton" fill="outline" color="light" shape="round">
+        Continue As Guest
+      </ion-button>
+
+      <ion-text class="forgotPassword" color="light" (click)="forgotPassword = !forgotPassword">
+        <p>I forgot my password :(</p>
+      </ion-text>
+    </div>
+
+  
+  <div *ngIf=emailSignIn padding>
+    <form [formGroup]="signInForm">
+
+      <ion-item>
+        <ion-label position="">Email</ion-label>
+        <ion-input formControlName="email" autofocus></ion-input>
+      </ion-item>
+      <div class="validation-errors">
+        <div *ngFor="let validation of validationMessages.email">
+          <div class="error-message" *ngIf="signInForm.get('email').hasError(validation.type) && (signInForm.get('email').dirty || signInForm.get('email').touched)">
+            {{ validation.message }}
+          </div>
+        </div>
+      </div>        
+      
+      <ion-item>
+        <ion-label position="">Password</ion-label>
+        <ion-input formControlName="password" type="password"></ion-input>
+      </ion-item>
+      <div class="validation-errors">
+        <div *ngFor="let validation of validationMessages.password">
+          <div class="error-message" *ngIf="signInForm.get('password').hasError(validation.type) && (signInForm.get('password').dirty || signInForm.get('password').touched)">
+            {{ validation.message }}
+          </div>
+        </div>
+      </div>    
+    </form>
+  
+    <div class="signInUpButtons">
+      <ion-button (click)="emailSignUp = false; emailSignIn = false; error = '';" fill="outline" color="light">
+        <ion-icon slot="start" name="arrow-round-back"></ion-icon>
+        back
+      </ion-button>
+      <ion-button (click)="signInWithEmail()" [disabled]="!signInForm.valid" (click)="signInWithEmail()">
+        Sign In
+      </ion-button>
+    </div>
+    <ion-item *ngIf=error>
+      <ion-text color="danger">
+        <p>{{error}}</p>
+      </ion-text>
+    </ion-item>
+  </div>
+
+  <div *ngIf=emailSignUp padding>
+    <form [formGroup]="validationsForm">
+
+      <ion-item>
+        <ion-label position="">Full Name</ion-label>
+        <ion-input formControlName="displayName" autofocus></ion-input>
+      </ion-item>
+      <div class="validation-errors">
+        <div *ngFor="let validation of validationMessages.displayName">
+          <div class="error-message" *ngIf="validationsForm.get('displayName').hasError(validation.type) && (validationsForm.get('displayName').dirty || validationsForm.get('displayName').touched)">
+            {{ validation.message }}
+          </div>
+        </div>
+      </div>     
+      
+      <ion-item>
+        <ion-label position="">Email</ion-label>
+        <ion-input formControlName="email"></ion-input>
+      </ion-item>
+      <div class="validation-errors" color="danger">
+        <div *ngFor="let validation of validationMessages.email">
+          <div class="error-message" *ngIf="validationsForm.get('email').hasError(validation.type) && (validationsForm.get('email').dirty || validationsForm.get('email').touched)">
+            {{ validation.message }}
+          </div>
+        </div>
+      </div>        
+
+      <div formGroupName="passwords">
+      
+        <ion-item>
+          <ion-label position="">Password</ion-label>
+          <ion-input formControlName="password" type="password"></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+          <div *ngFor="let validation of validationMessages.password">
+            <div class="error-message" *ngIf="matchingPasswordsGroup.get('password').hasError(validation.type) && (matchingPasswordsGroup.get('password').dirty || matchingPasswordsGroup.get('password').touched)">
+              {{ validation.message }}
+            </div>
+          </div>
+        </div>           
+
+        <ion-item>
+          <ion-label position="">Repeat Password</ion-label>
+          <ion-input formControlName="confirm_password" type="password"></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+          <div *ngFor="let validation of validationMessages.confirm_password">
+            <div class="error-message" *ngIf="matchingPasswordsGroup.get('confirm_password').hasError(validation.type) && (matchingPasswordsGroup.get('confirm_password').dirty || matchingPasswordsGroup.get('confirm_password').touched)">
+              {{ validation.message }}
+            </div>
+          </div>       
+        </div>
+
+      </div>
+    
+      <div class="signInUpButtons">
+        <ion-button (click)="emailSignUp = false; emailSignIn = false; error = '';" fill="outline" color="light">
+          <ion-icon slot="start" name="arrow-round-back"></ion-icon>
+          back
+        </ion-button>
+        <ion-button type="submit" [disabled]="!validationsForm.valid" (click)="signUpWithEmail()">
+          Sign Up
+        </ion-button>
+      </div>
+    </form>
+    <ion-item *ngIf=error>
+      <ion-text color="danger">
+        <p>{{error}}</p>
+      </ion-text>
+    </ion-item>
+  </div>
+
+   <div *ngIf=forgotPassword padding>
+    <form [formGroup]="resetForm">
+
+      <ion-item>
+        <ion-label position="">Email</ion-label>
+        <ion-input formControlName="email" autofocus></ion-input>
+      </ion-item>
+      <div class="validation-errors">
+        <div *ngFor="let validation of validationMessages.email">
+          <div class="error-message" *ngIf="resetForm.get('email').hasError(validation.type) && (resetForm.get('email').dirty || resetForm.get('email').touched)">
+            {{ validation.message }}
+          </div>
+        </div>
+      </div>         
+    </form>
+  
+    <div class="signInUpButtons">
+      <ion-button (click)="emailSignUp = false; emailSignIn = false; forgotPassword = false; error = '';" fill="outline" color="light">
+        <ion-icon slot="start" name="arrow-round-back"></ion-icon>
+        back
+      </ion-button>
+      <ion-button (click)="resetPassword()" [disabled]="!resetForm.valid" shape="round">
+        Send Password Reset Email
+      </ion-button>
+    </div>
+    <ion-item *ngIf=error>
+      <ion-text color="danger">
+        <p>{{error}}</p>
+      </ion-text>
+    </ion-item>
+  </div>
+  
+
+</div>
+
+</ion-content>
