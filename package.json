@@ -15,7 +15,7 @@
   "dependencies": {
     "@agm/core": "^1.1.0",
     "@agm/js-marker-clusterer": "^1.1.0",
-    "@angular/core": "~8.2.14",
+    "@angular/core": "~11.0.5",
     "@angular/fire": "^6.0.0-rc.1",
     "@angular/forms": "~8.2.14",
     "@angular/platform-browser": "^9.1.13",
